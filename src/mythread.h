@@ -2,19 +2,24 @@
 #define _mythread_h_
 
 #include <iostream>
-#include <cstdio>
-#include <stdlib.h>
 #include <string>
+#include <pthread.h>
+#include <unistd.h>
 
 using namespace std;
 
 class MyThread {
   public:
-    char *name;
-    string s;
+    pthread_t tid;
+
+  private:
 
   public:
     MyThread();
+    int Create(void *Callback, void *args);
+
+  private:
+    static void *printThread(void *args);
 };
 
 #endif
