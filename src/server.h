@@ -9,7 +9,7 @@ using namespace std;
 
 class Server {
   public:
-    MyThread *t;
+    MyThread *threads[2];
 
   public:
     Server();

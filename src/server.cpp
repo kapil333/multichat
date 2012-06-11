@@ -2,32 +2,21 @@
 
 using namespace std;
 
-static void *test(void *args) {
-  while(1) {
-  	cout << "Inside function: ";
-        if(args) cout << (char *) args;
-        cout << endl;
-        sleep(1);
-  }
-  return NULL;
-}
-
 Server::Server() {
-  this->t = new MyThread();
-  this->t->Create((void *) Server::printThread, NULL);
+  char *m1 = "I'm thread 1";
+  char *m2 = "I'm thread 2";
 
-  //this->t->Create((void *)test, NULL);
+  threads[0] = new MyThread();
+  threads[1] = new MyThread();
 
-/*
-  int t2ret;
+  //Create threads
+  threads[0]->Create((void *) Server::printThread, m1);
+  threads[1]->Create((void *) Server::printThread, m2);
 
-  pthread_t t1;
-
-  t2ret = pthread_create(&t1, NULL, &Server::printThread, NULL);
-
-  pthread_join(t1, NULL);
-*/
-
+  //Join threads: make process wait for threads' completion
+  threads[0]->Join();
+  threads[1]->Join();
+  
 }
 
 void *Server::printThread(void *args) {

@@ -17,6 +17,7 @@ class MyThread {
   public:
     MyThread();
     int Create(void *Callback, void *args);
+    int Join();
 
   private:
     static void *printThread(void *args);

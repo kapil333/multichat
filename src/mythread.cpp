@@ -3,20 +3,6 @@
 using namespace std;
 
 MyThread::MyThread() {
-/*
-  int t1ret, t2ret;
- 
-  t1ret = pthread_create(&this->threads[1], NULL, &MyThread::printThread, NULL);
-  t2ret = pthread_create(&this->threads[1], NULL, &MyThread::printThread, NULL);
-
-  if(t1ret || t2ret) cerr << "Error while creatint threads." << endl;
-  else {
-    cerr << "Fine." << endl;
-    //Wait until threads return
-    pthread_join(threads[1], NULL);
-    pthread_join(threads[0], NULL);
-  }
-*/
 }
 
 void * MyThread::printThread(void *args) {
@@ -32,8 +18,8 @@ void * MyThread::printThread(void *args) {
 int MyThread::Create(void *Callback, void *args) {
   int tret=0;
  
-  //tret = pthread_create(&this->tid, NULL, (void *)&Callback, NULL);
-  tret = pthread_create(&this->tid, NULL, (void *(*)(void *))Callback, NULL);
+  //Supercreepy typecast
+  tret = pthread_create(&this->tid, NULL, (void *(*)(void *))Callback, args);
 
   if(tret) { 
     cerr << "Error while creating threads." << endl;
@@ -43,8 +29,14 @@ int MyThread::Create(void *Callback, void *args) {
     cout << "Thread succesfuly created." << endl;
 
     //Wait until threads return to end main process
-    pthread_join(this->tid, NULL);
+    //Fix - This should be called after all threads are created
+    //pthread_join(this->tid, NULL);
 
     return 0;
   }
+}
+
+int MyThread::Join() {
+  pthread_join(this->tid, NULL);
+  return 0;
 }
