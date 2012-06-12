@@ -1,3 +1,6 @@
+#ifndef _client_h_
+#define _client_h_
+
 #include <iostream>
 #include <string>
 
@@ -10,4 +13,6 @@ class Client {
 
   public:
     Client(const char *name, int age);
-}:
+};
+
+#endif
