@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Client::Client(const char *name, int age) {
+Client::Client(const char *name, int id) {
   this->name = name;
-  this->age = age;
+  this->id = id;
 }

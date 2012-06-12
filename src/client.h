@@ -9,10 +9,13 @@ using namespace std;
 class Client {
   public:
     string name;
-    int age;
+    int id;
+
+    //Socket stuff
+    int sock;
 
   public:
-    Client(const char *name, int age);
+    Client(const char *name, int id);
 };
 
 #endif

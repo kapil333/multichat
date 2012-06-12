@@ -7,12 +7,11 @@ using namespace std;
 int main() {
   cout << "Running!" << endl;
 
-  //MyThread mt;
-
   Server *s;
   s = new Server();
 
-  //mt = new MyThread();
+  //Main loop
+  s->AcceptAndDispatch();
 
   return 0;
 }
