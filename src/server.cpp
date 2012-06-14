@@ -57,10 +57,9 @@ void Server::AcceptAndDispatch() {
 
   while(1) {
 
-          c = new Client("'Dummy name - change when right id is set'", -1);
+          c = new Client();
 	  t = new MyThread();
 
-	  //clientSock = accept(serverSock, (struct sockaddr *) &clientAddr, &cliSize);
 	  //Blocks here;
           c->sock = accept(serverSock, (struct sockaddr *) &clientAddr, &cliSize);
 
@@ -78,25 +77,25 @@ void *Server::HandleClient(void *args) {
 
   //Pointer to accept()'ed Client
   Client *c = (Client *) args;
-  char buffer[256], message[256*2];
+  char buffer[256-25], message[256];
   int index;
   int n;
 
   //Add client in Static clients <vector> (Critical section!)
-  MyThread::LockMutex((const char *) c->name.c_str());
+  MyThread::LockMutex((const char *) c->name);
   
     //Before adding the new client, calculate its id. (Now we have the lock)
-    c->id = Server::clients.size();
+    c->SetId(Server::clients.size());
     sprintf(buffer, "Client n.%d", c->id);
-    c->name = buffer;
+    c->SetName(buffer);
     cout << "Adding client with id: " << c->id << endl;
     Server::clients.push_back(*c);
 
-  MyThread::UnlockMutex((const char *) c->name.c_str());
+  MyThread::UnlockMutex((const char *) c->name);
 
   while(1) {
     memset(buffer, 0, sizeof buffer);
-    n = recv(c->sock, buffer, sizeof buffer,0);
+    n = recv(c->sock, buffer, sizeof buffer, 0);
 
     //Client disconnected?
     if(n == 0) {
@@ -104,22 +103,23 @@ void *Server::HandleClient(void *args) {
       close(c->sock);
       
       //Remove client in Static clients <vector> (Critical section!)
-      MyThread::LockMutex((const char *) c->name.c_str());
+      MyThread::LockMutex((const char *) c->name);
 
         index = Server::FindClientIndex(c);
         cout << "Erasing user in position " << index << " whose name id is: " 
 	  << Server::clients[index].id << endl;
         Server::clients.erase(Server::clients.begin() + index);
 
-      MyThread::UnlockMutex((const char *) c->name.c_str());
+      MyThread::UnlockMutex((const char *) c->name);
 
       break;
     }
+    else if(n < 0) {
+      cerr << "Error while receiving message from client: " << c->name << endl;
+    }
     else {
-      //cout << c->name << ": " << buffer << endl;
-
-      //Send out some text to client
-      sprintf(message, "<%s>: %s", c->name.c_str(), buffer); 
+      //Message received. Send to all clients.
+      snprintf(message, sizeof message, "<%s>: %s", c->name, buffer); 
       cout << "Will send to all: " << message << endl;
       Server::SendToAll(message);
     }

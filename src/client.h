@@ -2,20 +2,26 @@
 #define _client_h_
 
 #include <iostream>
-#include <string>
+
+#include <cstdio>
+#include <cstdlib>
+
+#define MAX_NAME_LENGHT 20
 
 using namespace std;
 
 class Client {
   public:
-    string name;
+    char *name;
     int id;
 
     //Socket stuff
     int sock;
 
   public:
-    Client(const char *name, int id);
+    Client();
+    void SetName(const char *name);
+    void SetId(int id);
 };
 
 #endif
