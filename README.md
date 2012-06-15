@@ -4,7 +4,7 @@ multichat - a simple linux multiclient and multithreaded socket server in C++
 Description
 -----------
 
-multichat uses BSD sockets and libpthread to handle new connections. In the main loop, it keeps listening
+multichat uses BSD TCP sockets and libpthread to handle new connections. In the main loop, it keeps listening
 for new connections, and when a new client arrives, a new thread is created, which receives messages from
 this client and repasses this message to all connected clients. 
 
@@ -35,7 +35,6 @@ may be trying to access them 'simultaneously'. To prevent concurrency problems, 
 for granting/denying access to shared resources, as in Server::SendToAll() function:
 
 ```
-
   //Acquire the lock - Blocks here until the lock is acquired
   MyThread::LockMutex("'SendToAll()'");
 
@@ -47,3 +46,47 @@ for granting/denying access to shared resources, as in Server::SendToAll() funct
   //Release the lock
   MyThread::UnlockMutex("'SendToAll()'");
 ```
+
+Usage
+-----
+
+1. Compile and run
+```
+$ make
+g++ -Wall -g  -c src/main.cpp -o obj/main.o
+g++ -Wall -g  -c src/mythread.cpp -o obj/mythread.o
+g++ -Wall -g  -c src/server.cpp -o obj/server.o
+g++ -Wall -g  -c src/client.cpp -o obj/client.o
+g++ -Wall -g -lpthread -o ./bin/chat ./obj/main.o ./obj/mythread.o ./obj/server.o ./obj/client.o
+
+$ ./bin/chat 
+Running!
+Mutex initialized.
+```
+
+2. Connecting clients. For example, using telnet and using netcat:
+
+2.1. telnet:
+```
+$ telnet 127.0.0.1 30666
+Trying 127.0.0.1...
+Connected to 127.0.0.1.
+Escape character is '^]'.
+Hello from telnet!
+<Client n.0>: Hello from telnet!
+<Client n.1>: Hello from netcat!
+```
+
+2.2 netcat:
+
+```
+$ netcat 127.0.0.1 30666
+<Client n.0>: Hello from telnet!
+Hello from netcat!
+<Client n.1>: Hello from netcat!
+```
+
+License
+-------
+
+This software is released with no warranties and is under public domain.
