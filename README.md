@@ -50,7 +50,7 @@ for granting/denying access to shared resources, as in Server::SendToAll() funct
 Usage
 -----
 
-- Compile and run
+### Compile and run
 
 ```
 > $ make
@@ -65,9 +65,9 @@ Running!
 Mutex initialized.
 ```
 
-- Connecting clients. For example, using telnet and using netcat:
+### Connecting clients. For example, using telnet and using netcat:
 
-- - telnet:
+* telnet:
 
 ```
 > $ telnet 127.0.0.1 30666
@@ -79,7 +79,7 @@ Hello from telnet!
 <Client n.1>: Hello from netcat!
 ```
 
-- - netcat:
+* netcat:
 
 ```
 > $ netcat 127.0.0.1 30666
