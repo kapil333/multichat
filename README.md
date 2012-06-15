@@ -19,7 +19,7 @@ The main loop is simply:
     //Blocks here;
     c->sock = accept(serverSock, (struct sockaddr *) &clientAddr, &cliSize);
 
-    if(clientSock < 0) {
+    if(c->sock < 0) {
       cerr << "Error on accept";
     }
     else {
