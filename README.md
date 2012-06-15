@@ -50,25 +50,27 @@ for granting/denying access to shared resources, as in Server::SendToAll() funct
 Usage
 -----
 
-1. Compile and run
+- Compile and run
+
 ```
-$ make
+> $ make
 g++ -Wall -g  -c src/main.cpp -o obj/main.o
 g++ -Wall -g  -c src/mythread.cpp -o obj/mythread.o
 g++ -Wall -g  -c src/server.cpp -o obj/server.o
 g++ -Wall -g  -c src/client.cpp -o obj/client.o
 g++ -Wall -g -lpthread -o ./bin/chat ./obj/main.o ./obj/mythread.o ./obj/server.o ./obj/client.o
 
-$ ./bin/chat 
+> $ ./bin/chat 
 Running!
 Mutex initialized.
 ```
 
-2. Connecting clients. For example, using telnet and using netcat:
+- Connecting clients. For example, using telnet and using netcat:
 
-2.1. telnet:
+- - telnet:
+
 ```
-$ telnet 127.0.0.1 30666
+> $ telnet 127.0.0.1 30666
 Trying 127.0.0.1...
 Connected to 127.0.0.1.
 Escape character is '^]'.
@@ -77,10 +79,10 @@ Hello from telnet!
 <Client n.1>: Hello from netcat!
 ```
 
-2.2 netcat:
+- - netcat:
 
 ```
-$ netcat 127.0.0.1 30666
+> $ netcat 127.0.0.1 30666
 <Client n.0>: Hello from telnet!
 Hello from netcat!
 <Client n.1>: Hello from netcat!
