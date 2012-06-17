@@ -20,11 +20,6 @@ int MyThread::Create(void *Callback, void *args) {
   }
   else {
     cout << "Thread succesfuly created." << endl;
-
-    //Wait until threads return to end main process
-    //Fix - This should be called after all threads are created
-    //pthread_join(this->tid, NULL);
-
     return 0;
   }
 }
