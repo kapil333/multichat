@@ -19,11 +19,6 @@
 using namespace std;
 
 class Server {
-  public:
-    //MyThread *threads[2];
-
-    //Critical section stuff
-    //vector<MyThread> threads;
 
   private:
     static vector<Client> clients;
@@ -35,7 +30,6 @@ class Server {
 
   public:
     Server();
-    static void * PrintThread(void *args);
     void AcceptAndDispatch();
     static void * HandleClient(void *args);
 

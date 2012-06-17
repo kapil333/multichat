@@ -29,18 +29,6 @@ Server::Server() {
   listen(serverSock, 5);
 }
 
-//Static - Dummy funtion to test threads
-void *Server::PrintThread(void *args) {
-  while(1) {
-  	cout << "Inside function: ";
-        if(args) cout << (char *) args;
-        cout << endl;
-        sleep(1);
-  }
-  return NULL;
-}
-
-
 /*
 	AcceptAndDispatch();
 
@@ -160,21 +148,3 @@ int Server::FindClientIndex(Client *c) {
   cerr << "Client id not found." << endl;
   return -1;
 }
-
-/*
-void GenerateSampleClients() {
-  Client *c;
-  for(int i=0; i<100; i++) {
-    char *n = (char *) malloc(20);
-    sprintf(n, "raphael%d", i);
-    c = new Client(n, 23);
-    clients.push_back(*c);
-    free(n);
-  }
-}
-*/
-
-  /* Iterator
-  for(vector<Client>::iterator i = this->clients.begin;
-      i < this->clients.end();
-      i++) {*/

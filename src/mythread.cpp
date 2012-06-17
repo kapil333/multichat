@@ -8,16 +8,6 @@ pthread_mutex_t MyThread::mutex;
 MyThread::MyThread() {
 }
 
-void * MyThread::printThread(void *args) {
-  while(1) {
-  	cout << "Inside function: ";
-        if(args) cout << (char *) args;
-        cout << endl;
-        sleep(1);
-  }
-  return NULL;
-}
-
 int MyThread::Create(void *Callback, void *args) {
   int tret=0;
  

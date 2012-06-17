@@ -25,9 +25,6 @@ class MyThread {
     static int InitMutex();
     static int LockMutex(const char *identifier);
     static int UnlockMutex(const char *identifier);
-
-  private:
-    static void *printThread(void *args);
 };
 
 #endif
