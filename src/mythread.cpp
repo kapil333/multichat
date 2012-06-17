@@ -19,7 +19,7 @@ int MyThread::Create(void *Callback, void *args) {
     return tret;
   }
   else {
-    cout << "Thread successfuly created." << endl;
+    cout << "Thread successfully created." << endl;
     return 0;
   }
 }
